@@ -1,0 +1,6 @@
+/* Base Application Styles */
+
+/* override normalize.css to prevent button styling of span in menu */
+html span[type="button"] {
+    -webkit-appearance:none;
+}
