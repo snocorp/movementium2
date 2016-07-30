@@ -178,8 +178,9 @@ function getUpdatedDistance(speed, time, units) {
 function getUpdatedTime(distance, speed, units) {
     let time = null;
     if (speed !== null && distance !== null) {
-        time = distance.div(speed);
-        console.log(time.toString());
+        let d = distance.to('m');
+        let s = speed.to('m/s')
+        time = d.div(s);
     }
 
     return getTime(time, units);
@@ -314,41 +315,41 @@ module.exports = function(state = initialState, action) {
         nextState.distance = getDistance(distance, state.units, action.value);
 
         if (state.mode === MODE_VELOCITY) {
-            let {pace, speed} = getUpdatedVelocity(distance, state.time.normalized, state.units);
+            let {pace, speed} = getUpdatedVelocity(nextState.distance.normalized, state.time.normalized, state.units);
             nextState.pace = pace;
             nextState.speed = speed;
         } else if (state.mode === MODE_TIME) {
-            nextState.time = getUpdatedTime(distance, state.speed.normalized, state.units);
+            nextState.time = getUpdatedTime(nextState.distance.normalized, state.speed.normalized, state.units);
         }
 
         return nextState;
     }
     case 'SET_PACE': {
         let pace = normalizePace(action.value);
-        if (pace !== null) console.log(pace);
+        if (pace !== null) console.log(pace.toString());
 
         nextState.pace = getPace(pace, state.units, action.value);
         nextState.speed = getSpeed(pace === null ? null : pace.inverse(), state.units);
 
         if (state.mode === MODE_TIME) {
-            nextState.time = getUpdatedTime(state.distance.normalized, state.speed.normalized, state.units);
+            nextState.time = getUpdatedTime(state.distance.normalized, nextState.speed.normalized, state.units);
         } else if (state.mode === MODE_DISTANCE) {
-            nextState.distance = getUpdatedDistance(state.speed.normalized, state.time.normalized, state.units);
+            nextState.distance = getUpdatedDistance(nextState.speed.normalized, state.time.normalized, state.units);
         }
 
         return nextState;
     }
     case 'SET_SPEED': {
         let speed = normalizeSpeed(action.value);
-        if (speed !== null) console.log(speed);
+        if (speed !== null) console.log(speed.toString());
 
         nextState.speed = getSpeed(speed, state.units, action.value);
         nextState.pace = getPace(speed === null ? null : speed.inverse(), state.units);
 
         if (state.mode === MODE_TIME) {
-            nextState.time = getUpdatedTime(state.distance.normalized, state.speed.normalized, state.units);
+            nextState.time = getUpdatedTime(state.distance.normalized, nextState.speed.normalized, state.units);
         } else if (state.mode === MODE_DISTANCE) {
-            nextState.distance = getUpdatedDistance(state.speed.normalized, state.time.normalized, state.units);
+            nextState.distance = getUpdatedDistance(nextState.speed.normalized, state.time.normalized, state.units);
         }
 
         return nextState;

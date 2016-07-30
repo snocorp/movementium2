@@ -67,7 +67,11 @@ export function normalizeSpeed(v) {
         return null;
     }
 
-    return speed;
+    if (speed) {
+      return speed;
+    }
+
+    return null;
 }
 
 /**
@@ -109,7 +113,11 @@ export function normalizePace(v) {
         return null;
     }
 
-    return pace;
+    if (pace) {
+      return pace;
+    }
+
+    return null;
 }
 
 export function normalizeDistance(d) {
@@ -127,5 +135,9 @@ export function normalizeDistance(d) {
         return null;
     }
 
-    return distance;
+    if (distance) {
+      return distance;
+    }
+
+    return null;
 }
