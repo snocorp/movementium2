@@ -1,7 +1,7 @@
 {
   "name": "movementium",
   "private": true,
-  "version": "0.0.2",
+  "version": "2.0.0",
   "description": "Pace calculator",
   "main": "",
   "scripts": {
@@ -16,9 +16,9 @@
     "test": "karma start",
     "test:watch": "karma start --autoWatch=true --singleRun=false"
   },
-  "repository": "",
+  "repository": "https://github.com/snocorp/movementium2",
   "keywords": [],
-  "author": "Your name here",
+  "author": "David Sewell",
   "devDependencies": {
     "babel-core": "^6.0.0",
     "babel-eslint": "^6.0.0",
