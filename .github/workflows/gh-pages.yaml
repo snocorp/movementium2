@@ -14,6 +14,11 @@ jobs:
         with:
           elm-version: 0.19.1
 
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: "12"
+
       - name: Install UglifyJS
         run: npm install -g uglify-js
 
