@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Movementium - Pace calculator</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="description" content="Pace calculator" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+    <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="mask-icon" href="safari-pinned-tab.svg" color="#00bcd4" />
+    <meta name="apple-mobile-web-app-title" content="Movementium" />
+    <meta name="application-name" content="Movementium" />
+    <meta name="theme-color" content="#00bcd4" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/purecss@2.0.3/build/pure-min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/purecss@2.0.3/build/grids-responsive-min.css"
+    />
+    <script src="main.min.js"></script>
+    <style>
+      .mm-block {
+        border: 1px solid #ddd;
+        margin: 0 0.5em 0.5em;
+        padding: 0.5em;
+      }
+      .mm-float {
+        float: right;
+        min-height: 34px;
+      }
+      .mm-float.pure-menu-horizontal {
+        width: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script>
+      var app = Elm.Main.init({
+        node: document.getElementById("app"),
+      });
+    </script>
+  </body>
+</html>
