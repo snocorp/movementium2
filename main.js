@@ -5758,7 +5758,7 @@ var $author$project$Time$formatSecondsAsHMMSS = function (seconds) {
 	var h = $elm$core$Basics$floor(seconds / 3600);
 	var m = $elm$core$Basics$floor((seconds - (h * 3600)) / 60);
 	var minutePrefix = (m < 10) ? '0' : '';
-	var s = seconds - ((h * 3600) - (m * 60));
+	var s = seconds - ((h * 3600) + (m * 60));
 	var secondPrefix = (s < 10) ? '0' : '';
 	return $elm$core$String$fromInt(h) + (':' + (minutePrefix + ($elm$core$String$fromInt(m) + (':' + (secondPrefix + A2($myrho$elm_round$Round$round, 2, s))))));
 };
