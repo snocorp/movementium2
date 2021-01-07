@@ -5774,7 +5774,7 @@ var $author$project$Velocity$formatPace = function (pace) {
 	if (!pace.$) {
 		var p = pace.a;
 		return $author$project$Time$formatTime(
-			$elm$core$Maybe$Just(p.S)) + ('/' + $author$project$Distance$distanceUnitSymbol(p._));
+			$elm$core$Maybe$Just(p.T)) + ('/' + $author$project$Distance$distanceUnitSymbol(p._));
 	} else {
 		return '(invalid)';
 	}
@@ -5801,9 +5801,9 @@ var $author$project$Model$Meter = 0;
 var $author$project$Model$Mile = 3;
 var $author$project$Model$Yard = 2;
 var $author$project$Time$durationToSeconds = function (duration) {
-	var minutes = A2($elm$core$Maybe$withDefault, 0, duration.R);
-	var hours = A2($elm$core$Maybe$withDefault, 0, duration.Q);
-	return ((3600 * hours) + (60 * minutes)) + duration.S;
+	var minutes = A2($elm$core$Maybe$withDefault, 0, duration.S);
+	var hours = A2($elm$core$Maybe$withDefault, 0, duration.R);
+	return ((3600 * hours) + (60 * minutes)) + duration.T;
 };
 var $elm$regex$Regex$Match = F4(
 	function (match, index, number, submatches) {
@@ -5827,7 +5827,7 @@ var $author$project$Time$submatchesToDuration = function (submatches) {
 		var _v2 = _v1.b;
 		var s = _v2.a;
 		return {
-			Q: function () {
+			R: function () {
 				if (!h.$) {
 					var hours = h.a;
 					return $elm$core$String$toInt(hours);
@@ -5835,7 +5835,7 @@ var $author$project$Time$submatchesToDuration = function (submatches) {
 					return $elm$core$Maybe$Nothing;
 				}
 			}(),
-			R: function () {
+			S: function () {
 				if (!m.$) {
 					var minutes = m.a;
 					return $elm$core$String$toInt(minutes);
@@ -5843,7 +5843,7 @@ var $author$project$Time$submatchesToDuration = function (submatches) {
 					return $elm$core$Maybe$Nothing;
 				}
 			}(),
-			S: function () {
+			T: function () {
 				if (!s.$) {
 					var secondsStr = s.a;
 					var _v6 = $elm$core$String$toFloat(secondsStr);
@@ -5859,7 +5859,7 @@ var $author$project$Time$submatchesToDuration = function (submatches) {
 			}()
 		};
 	} else {
-		return {Q: $elm$core$Maybe$Nothing, R: $elm$core$Maybe$Nothing, S: 0.0};
+		return {R: $elm$core$Maybe$Nothing, S: $elm$core$Maybe$Nothing, T: 0.0};
 	}
 };
 var $elm$core$String$trim = _String_trim;
@@ -5927,7 +5927,7 @@ var $author$project$Velocity$parsePace = function (input) {
 			var s = _v2.a.a;
 			var u = _v2.b.a;
 			return $elm$core$Maybe$Just(
-				{S: s, _: u});
+				{T: s, _: u});
 		} else {
 			return $elm$core$Maybe$Nothing;
 		}
@@ -5939,7 +5939,7 @@ var $author$project$Velocity$normalizePace = function (input) {
 	var pace = $author$project$Velocity$parsePace(input);
 	var convertToSecondsPerMeter = function (p) {
 		return {
-			S: p.S / $author$project$Distance$distanceUnitInMeters(p._),
+			T: p.T / $author$project$Distance$distanceUnitInMeters(p._),
 			_: 0
 		};
 	};
@@ -6574,7 +6574,7 @@ var $author$project$Main$calcTDV = F3(
 					return $.x;
 				},
 				$author$project$Distance$normalizeDistance(distance)));
-		return {z: d, D: t, T: v};
+		return {z: d, D: t, Q: v};
 	});
 var $author$project$Distance$formatDistance = function (distance) {
 	if (!distance.$) {
@@ -6608,8 +6608,8 @@ var $author$project$Main$updateInputs = function (model) {
 	var timeInput = function () {
 		var _v3 = model.aX;
 		if (_v3 === 2) {
-			return $author$project$Time$formatTime(
-				$elm$core$Maybe$Just(tdv.z / tdv.T));
+			return (!tdv.Q) ? '' : $author$project$Time$formatTime(
+				$elm$core$Maybe$Just(tdv.z / tdv.Q));
 		} else {
 			return model.M;
 		}
@@ -6633,7 +6633,7 @@ var $author$project$Main$updateInputs = function (model) {
 			return (tdv.z === 0.0) ? '' : $author$project$Velocity$formatPace(
 				$elm$core$Maybe$Just(
 					{
-						S: ($author$project$Distance$distanceUnitInMeters(model.B) * tdv.D) / tdv.z,
+						T: ($author$project$Distance$distanceUnitInMeters(model.B) * tdv.D) / tdv.z,
 						_: model.B
 					}));
 		} else {
@@ -6647,7 +6647,7 @@ var $author$project$Main$updateInputs = function (model) {
 				$elm$core$Maybe$Just(
 					{
 						_: model.I,
-						x: (tdv.D * tdv.T) / $author$project$Distance$distanceUnitInMeters(model.I)
+						x: (tdv.D * tdv.Q) / $author$project$Distance$distanceUnitInMeters(model.I)
 					}));
 		} else {
 			return model.a$;
@@ -6704,7 +6704,7 @@ var $author$project$Main$update = F2(
 						return (!v.x) ? '' : $author$project$Velocity$formatPace(
 							$elm$core$Maybe$Just(
 								{
-									S: $author$project$Distance$distanceUnitInMeters(model.B) / v.x,
+									T: $author$project$Distance$distanceUnitInMeters(model.B) / v.x,
 									_: model.B
 								}));
 					} else {
@@ -6721,11 +6721,11 @@ var $author$project$Main$update = F2(
 				var velocityInput = function () {
 					if (!pace.$) {
 						var p = pace.a;
-						return (!p.S) ? '' : $author$project$Velocity$formatVelocity(
+						return (!p.T) ? '' : $author$project$Velocity$formatVelocity(
 							$elm$core$Maybe$Just(
 								{
 									_: model.F,
-									x: A2($author$project$Velocity$velocityFromMetersPerSecondToUnit, 1 / p.S, model.F)
+									x: A2($author$project$Velocity$velocityFromMetersPerSecondToUnit, 1 / p.T, model.F)
 								}));
 					} else {
 						return '';
