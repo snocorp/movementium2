@@ -81,7 +81,7 @@ formatSecondsAsHMMSS seconds =
 
         s : Float
         s =
-            seconds - toFloat (h * 3600 - m * 60)
+            seconds - toFloat (h * 3600 + m * 60)
 
         minutePrefix : String
         minutePrefix =
