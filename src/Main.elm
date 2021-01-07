@@ -112,7 +112,11 @@ updateInputs model =
         timeInput =
             case model.calcMode of
                 TimeCalcMode ->
-                    formatTime (Just (tdv.distance / tdv.velocity))
+                    -- if velocity is zero then time is not defined
+                    if tdv.velocity == 0 then
+                        ""
+                    else
+                        formatTime (Just (tdv.distance / tdv.velocity))
 
                 _ ->
                     model.timeInput
